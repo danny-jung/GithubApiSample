@@ -7,7 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.dannyjung.githubapi.presenter.databinding.FragmentStarBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class StarFragment : Fragment() {
 
     private lateinit var starViewModel: StarViewModel
