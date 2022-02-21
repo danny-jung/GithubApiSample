@@ -5,14 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import com.dannyjung.githubapi.presenter.databinding.FragmentMyPageBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MyPageFragment : Fragment() {
 
-    private lateinit var myPageViewModel: MyPageViewModel
+    private val myPageViewModel by viewModels<MyPageViewModel>()
     private var _binding: FragmentMyPageBinding? = null
 
     private val binding get() = _binding!!
@@ -22,9 +22,6 @@ class MyPageFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        myPageViewModel =
-            ViewModelProvider(this).get(MyPageViewModel::class.java)
-
         _binding = FragmentMyPageBinding.inflate(inflater, container, false)
         val root: View = binding.root
 

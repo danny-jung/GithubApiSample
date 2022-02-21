@@ -5,14 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import com.dannyjung.githubapi.presenter.databinding.FragmentStarBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class StarFragment : Fragment() {
 
-    private lateinit var starViewModel: StarViewModel
+    private val starViewModel by viewModels<StarViewModel>()
     private var _binding: FragmentStarBinding? = null
 
     private val binding get() = _binding!!
@@ -22,9 +22,6 @@ class StarFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        starViewModel =
-            ViewModelProvider(this).get(StarViewModel::class.java)
-
         _binding = FragmentStarBinding.inflate(inflater, container, false)
         val root: View = binding.root
 

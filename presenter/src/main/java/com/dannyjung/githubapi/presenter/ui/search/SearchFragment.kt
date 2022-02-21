@@ -5,14 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import com.dannyjung.githubapi.presenter.databinding.FragmentSearchBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class SearchFragment : Fragment() {
 
-    private lateinit var searchViewModel: SearchViewModel
+    private val searchViewModel by viewModels<SearchViewModel>()
     private var _binding: FragmentSearchBinding? = null
 
     private val binding get() = _binding!!
@@ -22,9 +22,6 @@ class SearchFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        searchViewModel =
-            ViewModelProvider(this).get(SearchViewModel::class.java)
-
         _binding = FragmentSearchBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
