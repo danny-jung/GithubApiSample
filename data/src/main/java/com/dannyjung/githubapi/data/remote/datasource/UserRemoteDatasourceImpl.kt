@@ -8,9 +8,13 @@ class UserRemoteDatasourceImpl(
     private val userService: UserService
 ) : UserRemoteDataSource {
 
-    override suspend fun getUser(): UserResponse =
-        userService.getUser()
+    override suspend fun getUser(token: String?): UserResponse =
+        userService.getUser(token)
 
-    override suspend fun getUserRepos(userName: String, page: Int, pageSize: Int): List<RepoItem> =
-        userService.getUserRepos(userName, page, pageSize)
+    override suspend fun getUserRepos(
+        token: String?,
+        userName: String,
+        page: Int,
+        pageSize: Int
+    ): List<RepoItem> = userService.getUserRepos(token, userName, page, pageSize)
 }
