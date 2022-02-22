@@ -63,6 +63,7 @@ dependencies {
 
     // Mavericks
     implementation 'com.airbnb.android:mavericks:2.6.0'
+    implementation 'com.airbnb.android:mavericks-hilt:2.6.0'
 
     // stetho
     implementation 'com.facebook.stetho:stetho:1.5.1'
