@@ -1,8 +1,22 @@
 package com.dannyjung.githubapi.presenter.ui.mypage
 
-import androidx.lifecycle.ViewModel
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
+import com.airbnb.mvrx.MavericksViewModel
+import com.airbnb.mvrx.MavericksViewModelFactory
+import com.airbnb.mvrx.hilt.AssistedViewModelFactory
+import com.airbnb.mvrx.hilt.hiltMavericksViewModelFactory
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 
-@HiltViewModel
-class MyPageViewModel @Inject constructor() : ViewModel()
+class MyPageViewModel @AssistedInject constructor(
+    @Assisted initialState: MyPageState
+) : MavericksViewModel<MyPageState>(initialState) {
+
+    @AssistedFactory
+    interface Factory : AssistedViewModelFactory<MyPageViewModel, MyPageState> {
+        override fun create(state: MyPageState): MyPageViewModel
+    }
+
+    companion object :
+        MavericksViewModelFactory<MyPageViewModel, MyPageState> by hiltMavericksViewModelFactory()
+}
