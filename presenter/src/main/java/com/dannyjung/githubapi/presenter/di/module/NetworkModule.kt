@@ -36,6 +36,13 @@ object NetworkModule {
                     )
                 }
             )
+            .addInterceptor { chain ->
+                chain.proceed(
+                    chain.request().newBuilder()
+                        .addHeader("Accept", "application/json")
+                        .build()
+                )
+            }
             .apply {
                 if (BuildConfig.DEBUG) {
                     addNetworkInterceptor(StethoInterceptor())
