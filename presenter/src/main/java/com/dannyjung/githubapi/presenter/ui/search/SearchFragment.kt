@@ -10,9 +10,11 @@ import com.airbnb.mvrx.fragmentViewModel
 import com.dannyjung.githubapi.presenter.R
 import com.dannyjung.githubapi.presenter.databinding.FragmentSearchBinding
 import com.dannyjung.githubapi.presenter.ui.base.BaseFragment
+import com.dannyjung.githubapi.presenter.ui.component.loadingProgressBar
 import com.dannyjung.githubapi.presenter.ui.component.repoListItem
 import com.dannyjung.githubapi.presenter.ui.component.space
 import com.dannyjung.githubapi.presenter.ui.epoxy.simpleEpoxyController
+import com.dannyjung.githubapi.presenter.ui.listener.addLoadMoreScrollListener
 import com.dannyjung.githubapi.presenter.ui.utils.dpToPx
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -50,6 +52,10 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
 
         binding.epoxyRecyclerView.run {
             layoutManager = LinearLayoutManager(requireContext())
+            clearOnScrollListeners()
+            addLoadMoreScrollListener {
+                searchViewModel.searchRepositoriesNextPage()
+            }
             setController(epoxyController)
         }
     }
@@ -77,6 +83,10 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
                 backgroundColor(R.color.gray_10)
                 height(requireContext().dpToPx(8))
             }
+        }
+
+        if (searchState.searchRepoNextPageAsync is Loading) {
+            loadingProgressBar { id("loading_progress_bar") }
         }
     }
 }
