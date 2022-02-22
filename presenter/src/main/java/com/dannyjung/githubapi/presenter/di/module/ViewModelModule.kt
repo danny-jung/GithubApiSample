@@ -3,6 +3,7 @@ package com.dannyjung.githubapi.presenter.di.module
 import com.airbnb.mvrx.hilt.AssistedViewModelFactory
 import com.airbnb.mvrx.hilt.MavericksViewModelComponent
 import com.airbnb.mvrx.hilt.ViewModelKey
+import com.dannyjung.githubapi.presenter.ui.login.LoginViewModel
 import com.dannyjung.githubapi.presenter.ui.mypage.MyPageViewModel
 import com.dannyjung.githubapi.presenter.ui.search.SearchViewModel
 import com.dannyjung.githubapi.presenter.ui.star.StarViewModel
@@ -34,5 +35,12 @@ interface ViewModelModule {
     @ViewModelKey(MyPageViewModel::class)
     fun bindMyPageViewModel(
         factory: MyPageViewModel.Factory
+    ): AssistedViewModelFactory<*, *>
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(LoginViewModel::class)
+    fun bindLoginViewModel(
+        factory: LoginViewModel.Factory
     ): AssistedViewModelFactory<*, *>
 }
