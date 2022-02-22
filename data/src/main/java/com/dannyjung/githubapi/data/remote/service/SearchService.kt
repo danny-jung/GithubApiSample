@@ -7,7 +7,7 @@ import retrofit2.http.Query
 
 interface SearchService {
 
-    @GET("/search/repositories")
+    @GET("search/repositories")
     suspend fun searchRepositories(
         @Header("Authorization") token: String?,
         @Query("q") query: String,
