@@ -2,8 +2,10 @@ package com.dannyjung.githubapi.presenter.di.module
 
 import com.dannyjung.githubapi.data.repository.AuthRepositoryImpl
 import com.dannyjung.githubapi.data.repository.SearchRepositoryImpl
+import com.dannyjung.githubapi.data.repository.UserRepositoryImpl
 import com.dannyjung.githubapi.domain.repository.AuthRepository
 import com.dannyjung.githubapi.domain.repository.SearchRepository
+import com.dannyjung.githubapi.domain.repository.UserRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -25,4 +27,10 @@ interface RepositoryModule {
     fun bindAuthRepository(
         authRepositoryImpl: AuthRepositoryImpl
     ): AuthRepository
+
+    @Singleton
+    @Binds
+    fun bindUserRepository(
+        userRepositoryImpl: UserRepositoryImpl
+    ): UserRepository
 }
