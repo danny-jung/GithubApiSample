@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">GithubApi</string>
+    
+    <string name="authorization_callback_url_scheme">dannygithubapi</string>
+    <string name="authorization_callback_url_host">authorization</string>
+    
     <string name="title_search">Search</string>
     <string name="title_star">Star</string>
     <string name="title_my_page">My Page</string>
