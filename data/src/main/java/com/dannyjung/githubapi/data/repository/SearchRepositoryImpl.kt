@@ -2,7 +2,7 @@ package com.dannyjung.githubapi.data.repository
 
 import com.dannyjung.githubapi.data.di.qualifiers.IoDispatcher
 import com.dannyjung.githubapi.data.mapper.SearchMapper
-import com.dannyjung.githubapi.data.remote.datasource.SearchDataSource
+import com.dannyjung.githubapi.data.remote.datasource.SearchRemoteDataSource
 import com.dannyjung.githubapi.domain.model.SearchRepo
 import com.dannyjung.githubapi.domain.repository.SearchRepository
 import kotlinx.coroutines.CoroutineDispatcher
@@ -11,7 +11,7 @@ import javax.inject.Inject
 
 class SearchRepositoryImpl @Inject constructor(
     @IoDispatcher private val coroutineDispatcher: CoroutineDispatcher,
-    private val searchDatasource: SearchDataSource,
+    private val searchRemoteDatasource: SearchRemoteDataSource,
 ) : SearchRepository {
 
     override suspend fun searchRepositories(
@@ -20,7 +20,7 @@ class SearchRepositoryImpl @Inject constructor(
         pageSize: Int
     ): SearchRepo =
         withContext(coroutineDispatcher) {
-            val searchRepoResponse = searchDatasource.searchRepositories(
+            val searchRepoResponse = searchRemoteDatasource.searchRepositories(
                 token = null, // TODO
                 query = query,
                 page = page,

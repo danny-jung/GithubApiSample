@@ -3,9 +3,9 @@ package com.dannyjung.githubapi.data.remote.datasource
 import com.dannyjung.githubapi.data.model.SearchRepoResponse
 import com.dannyjung.githubapi.data.remote.service.SearchService
 
-class SearchDatasourceImpl(
+class SearchRemoteDatasourceImpl(
     private val searchService: SearchService
-) : SearchDataSource {
+) : SearchRemoteDataSource {
 
     override suspend fun searchRepositories(
         token: String?,

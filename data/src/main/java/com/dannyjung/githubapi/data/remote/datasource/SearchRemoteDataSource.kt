@@ -2,7 +2,7 @@ package com.dannyjung.githubapi.data.remote.datasource
 
 import com.dannyjung.githubapi.data.model.SearchRepoResponse
 
-interface SearchDataSource {
+interface SearchRemoteDataSource {
 
     suspend fun searchRepositories(
         token: String?,
