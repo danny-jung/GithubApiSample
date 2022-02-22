@@ -2,6 +2,7 @@ package com.dannyjung.githubapi.presenter.di.module
 
 import com.dannyjung.githubapi.data.remote.service.AuthService
 import com.dannyjung.githubapi.data.remote.service.SearchService
+import com.dannyjung.githubapi.data.remote.service.UserService
 import com.dannyjung.githubapi.presenter.BuildConfig
 import com.dannyjung.githubapi.presenter.di.qualifiers.AuthRetrofit
 import com.dannyjung.githubapi.presenter.di.qualifiers.GitHubRetrofit
@@ -82,4 +83,9 @@ object NetworkModule {
     fun provideSearchService(
         @GitHubRetrofit retrofit: Retrofit
     ): SearchService = retrofit.create(SearchService::class.java)
+
+    @Provides
+    fun provideUserService(
+        @GitHubRetrofit retrofit: Retrofit
+    ): UserService = retrofit.create(UserService::class.java)
 }
