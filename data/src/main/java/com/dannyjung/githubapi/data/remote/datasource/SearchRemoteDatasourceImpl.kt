@@ -14,7 +14,7 @@ class SearchRemoteDatasourceImpl(
         pageSize: Int
     ): SearchRepoResponse =
         searchService.searchRepositories(
-            token = token,
+            token = "token $token",
             query = query,
             page = page,
             pageSize = pageSize
