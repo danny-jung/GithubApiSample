@@ -20,7 +20,7 @@ class LoginButton @JvmOverloads constructor(
         text = "로그인"
         setTextColor(context.getResourceIdWithAttr(R.attr.colorOnSecondary))
         setTextSize(TypedValue.COMPLEX_UNIT_SP, 18f)
-        setBackgroundResource(R.drawable.shape_rounded_rect_4)
+        setBackgroundResource(R.drawable.shape_rounded_rect_4_color_secondary)
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
