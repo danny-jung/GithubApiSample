@@ -1,7 +1,7 @@
 package com.dannyjung.githubapi.data.mapper
 
 import com.dannyjung.githubapi.data.model.SearchRepoResponse
-import com.dannyjung.githubapi.domain.model.Item
+import com.dannyjung.githubapi.domain.model.RepoItem
 import com.dannyjung.githubapi.domain.model.Owner
 import com.dannyjung.githubapi.domain.model.SearchRepo
 
@@ -11,7 +11,7 @@ object SearchMapper {
         SearchRepo(
             totalCount = searchRepoResponse.totalCount,
             items = searchRepoResponse.items.map { item ->
-                Item(
+                RepoItem(
                     id = item.id,
                     name = item.name,
                     description = item.description,
