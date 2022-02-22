@@ -7,6 +7,7 @@ import com.dannyjung.githubapi.domain.model.SearchRepo
 
 data class SearchState(
     val searchRepoAsync: Async<SearchRepo> = Uninitialized,
+    val searchRepoNextPageAsync: Async<SearchRepo> = Uninitialized,
     val keyword: String? = null,
     val searchRepo: SearchRepo? = null,
     val page: Int = 1
