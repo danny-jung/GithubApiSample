@@ -14,7 +14,7 @@ class SearchRepositoriesUseCase @Inject constructor(
     suspend operator fun invoke(
         query: String,
         page: Int,
-        pageSize: Int
+        pageSize: Int = 20
     ): Async<SearchRepo> =
         try {
             Success(
