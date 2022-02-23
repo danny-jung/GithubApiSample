@@ -2,9 +2,11 @@ package com.dannyjung.githubapi.app.di.module
 
 import com.dannyjung.githubapi.data.repository.AuthRepositoryImpl
 import com.dannyjung.githubapi.data.repository.SearchRepositoryImpl
+import com.dannyjung.githubapi.data.repository.StarredRepoRepositoryImpl
 import com.dannyjung.githubapi.data.repository.UserRepositoryImpl
 import com.dannyjung.githubapi.domain.repository.AuthRepository
 import com.dannyjung.githubapi.domain.repository.SearchRepository
+import com.dannyjung.githubapi.domain.repository.StarredRepoRepository
 import com.dannyjung.githubapi.domain.repository.UserRepository
 import dagger.Binds
 import dagger.Module
@@ -33,4 +35,10 @@ interface RepositoryModule {
     fun bindUserRepository(
         userRepositoryImpl: UserRepositoryImpl
     ): UserRepository
+
+    @Singleton
+    @Binds
+    fun bindStarredRepoRepository(
+        starredRepoRepositoryImpl: StarredRepoRepositoryImpl
+    ): StarredRepoRepository
 }
