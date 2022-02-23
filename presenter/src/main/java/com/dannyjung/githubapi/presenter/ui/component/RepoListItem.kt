@@ -32,6 +32,9 @@ class RepoListItem @JvmOverloads constructor(
     var repoId: Long? = null
         @ModelProp set
 
+    var repoUrl: String? = null
+        @ModelProp set
+
     @TextProp
     fun setRepoName(repoName: CharSequence?) {
         binding.repoName.text = repoName
@@ -83,5 +86,10 @@ class RepoListItem @JvmOverloads constructor(
     @CallbackProp
     fun setOnStarClick(onClick: ((id: Long) -> Unit)?) {
         binding.stargazers.setOnClickListener { repoId?.let { onClick?.invoke(it) } }
+    }
+
+    @CallbackProp
+    fun setOnClick(onClick: ((repoUrl: String) -> Unit)?) {
+        setOnClickListener { repoUrl?.let { onClick?.invoke(it) } }
     }
 }

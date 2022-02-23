@@ -1,5 +1,7 @@
 package com.dannyjung.githubapi.presenter.ui.search
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.widget.SearchView
@@ -67,6 +69,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
             repoListItem {
                 id("repo_list_item", item.id)
                 repoId(item.id)
+                repoUrl(item.url)
                 repoName(item.name)
                 description(item.description)
                 stargazersCount(item.stargazersCount)
@@ -75,6 +78,13 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
                 ownerName(item.owner.name)
                 onStarClick { repoId ->
                     // TODO
+                }
+                onClick { repoUrl ->
+                    startActivity(
+                        Intent(Intent.ACTION_VIEW).apply {
+                            data = Uri.parse(repoUrl)
+                        }
+                    )
                 }
             }
 

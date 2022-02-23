@@ -93,6 +93,7 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(FragmentMyPageBinding
             repoListItem {
                 id("repo_list_item", item.id)
                 repoId(item.id)
+                repoUrl(item.url)
                 repoName(item.name)
                 description(item.description)
                 stargazersCount(item.stargazersCount)
@@ -101,6 +102,13 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(FragmentMyPageBinding
                 ownerName(item.owner.name)
                 onStarClick { repoId ->
                     // TODO
+                }
+                onClick { repoUrl ->
+                    startActivity(
+                        Intent(Intent.ACTION_VIEW).apply {
+                            data = Uri.parse(repoUrl)
+                        }
+                    )
                 }
             }
 
