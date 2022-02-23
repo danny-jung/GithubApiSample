@@ -9,12 +9,17 @@ class UserRemoteDatasourceImpl(
 ) : UserRemoteDataSource {
 
     override suspend fun getUser(token: String?): UserResponse =
-        userService.getUser(token)
+        userService.getUser(token = "token $token")
 
     override suspend fun getUserRepos(
         token: String?,
         userName: String,
         page: Int,
         pageSize: Int
-    ): List<RepoItem> = userService.getUserRepos(token, userName, page, pageSize)
+    ): List<RepoItem> = userService.getUserRepos(
+        token = "token $token",
+        userName = userName,
+        page = page,
+        pageSize = pageSize
+    )
 }
