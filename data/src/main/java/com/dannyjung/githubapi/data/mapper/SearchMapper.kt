@@ -21,7 +21,8 @@ object SearchMapper {
                         avatarUrl = item.owner.avatarUrl
                     ),
                     stargazersCount = item.stargazersCount,
-                    watchersCount = item.watchersCount
+                    watchersCount = item.watchersCount,
+                    url = item.htmlUrl
                 )
             }
         )

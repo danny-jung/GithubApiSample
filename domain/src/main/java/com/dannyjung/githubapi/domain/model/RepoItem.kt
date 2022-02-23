@@ -6,7 +6,8 @@ data class RepoItem(
     val description: String?,
     val owner: Owner,
     val stargazersCount: Long,
-    val watchersCount: Long
+    val watchersCount: Long,
+    val url: String
 )
 
 data class Owner(

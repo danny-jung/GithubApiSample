@@ -14,7 +14,9 @@ data class RepoItem(
     @SerializedName("stargazers_count")
     val stargazersCount: Long,
     @SerializedName("watchers_count")
-    val watchersCount: Long
+    val watchersCount: Long,
+    @SerializedName("html_url")
+    val htmlUrl: String,
 )
 
 data class Owner(

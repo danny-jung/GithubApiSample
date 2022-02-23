@@ -31,7 +31,8 @@ object UserMapper {
                     avatarUrl = it.owner.avatarUrl
                 ),
                 stargazersCount = it.stargazersCount,
-                watchersCount = it.watchersCount
+                watchersCount = it.watchersCount,
+                url = it.htmlUrl
             )
         }
 }
