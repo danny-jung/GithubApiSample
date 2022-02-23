@@ -2,7 +2,6 @@ package com.dannyjung.githubapi.data.mapper
 
 import com.dannyjung.githubapi.data.model.SearchRepoResponse
 import com.dannyjung.githubapi.domain.model.RepoItem
-import com.dannyjung.githubapi.domain.model.Owner
 import com.dannyjung.githubapi.domain.model.SearchRepo
 
 object SearchMapper {
@@ -15,7 +14,7 @@ object SearchMapper {
                     id = item.id,
                     name = item.name,
                     description = item.description,
-                    owner = Owner(
+                    owner = RepoItem.Owner(
                         id = item.owner.id,
                         name = item.owner.login,
                         avatarUrl = item.owner.avatarUrl

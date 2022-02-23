@@ -2,7 +2,6 @@ package com.dannyjung.githubapi.data.mapper
 
 import com.dannyjung.githubapi.data.model.RepoItem
 import com.dannyjung.githubapi.data.model.UserResponse
-import com.dannyjung.githubapi.domain.model.Owner
 import com.dannyjung.githubapi.domain.model.User
 
 object UserMapper {
@@ -25,7 +24,7 @@ object UserMapper {
                 id = it.id,
                 name = it.name,
                 description = it.description,
-                owner = Owner(
+                owner = com.dannyjung.githubapi.domain.model.RepoItem.Owner(
                     id = it.owner.id,
                     name = it.owner.login,
                     avatarUrl = it.owner.avatarUrl
