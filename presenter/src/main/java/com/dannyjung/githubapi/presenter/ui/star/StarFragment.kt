@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.airbnb.mvrx.UniqueOnly
 import com.airbnb.mvrx.activityViewModel
 import com.dannyjung.githubapi.domain.mapper.RepoItemMapper
 import com.dannyjung.githubapi.domain.mapper.StarredRepoItemMapper
@@ -33,7 +34,7 @@ class StarFragment : BaseFragment<FragmentStarBinding>(FragmentStarBinding::infl
 
         initView()
 
-        loginViewModel.onEach(LoginState::accessToken) { accessToken ->
+        loginViewModel.onEach(LoginState::accessToken, UniqueOnly("star_access_token")) { accessToken ->
             binding.loginButton.isVisible = accessToken == null
             binding.epoxyRecyclerView.isVisible = accessToken != null
 
@@ -98,5 +99,10 @@ class StarFragment : BaseFragment<FragmentStarBinding>(FragmentStarBinding::infl
                 height(requireContext().dpToPx(8))
             }
         }
+    }
+
+    companion object {
+
+        fun newInstance() = StarFragment()
     }
 }

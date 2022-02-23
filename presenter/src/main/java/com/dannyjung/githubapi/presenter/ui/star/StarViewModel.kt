@@ -30,7 +30,7 @@ class StarViewModel @AssistedInject constructor(
 
         setState { copy(getReposAsync = Loading()) }
 
-        val reposDeferred = async { getStarredReposUseCase(offset = state.repos?.size ?: 0) }
+        val reposDeferred = async { getStarredReposUseCase(offset = 0) }
         val repoIdsDeferred = async { getAllStarredRepoIdsUseCase() }
 
         val reposAsync = reposDeferred.await()

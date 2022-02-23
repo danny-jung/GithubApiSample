@@ -113,4 +113,9 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
             loadingProgressBar { id("loading_progress_bar") }
         }
     }
+
+    companion object {
+
+        fun newInstance() = SearchFragment()
+    }
 }
