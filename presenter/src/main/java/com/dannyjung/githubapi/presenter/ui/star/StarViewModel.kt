@@ -53,6 +53,26 @@ class StarViewModel @AssistedInject constructor(
         }
     }
 
+    fun getStarredRepoNextPage() = viewModelScope.launch {
+        val state = awaitState()
+
+        if (state.getReposAsync !is Success ||
+            state.repos == null ||
+            state.getReposNextPageAsync is Loading
+        ) return@launch
+
+        setState { copy(getReposNextPageAsync = Loading()) }
+
+        val async = getStarredReposUseCase(offset = state.repos.size)
+
+        setState {
+            copy(
+                getReposNextPageAsync = async,
+                repos = repos?.plus(async() ?: emptyList())
+            )
+        }
+    }
+
     fun addRepo(repoItem: StarredRepoItem) = viewModelScope.launch {
         val state = awaitState()
 

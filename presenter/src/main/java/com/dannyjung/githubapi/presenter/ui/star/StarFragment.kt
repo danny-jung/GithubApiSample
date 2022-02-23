@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.airbnb.mvrx.Loading
 import com.airbnb.mvrx.UniqueOnly
 import com.airbnb.mvrx.activityViewModel
 import com.dannyjung.githubapi.domain.mapper.RepoItemMapper
@@ -13,9 +14,11 @@ import com.dannyjung.githubapi.domain.mapper.StarredRepoItemMapper
 import com.dannyjung.githubapi.presenter.R
 import com.dannyjung.githubapi.presenter.databinding.FragmentStarBinding
 import com.dannyjung.githubapi.presenter.ui.base.BaseFragment
+import com.dannyjung.githubapi.presenter.ui.component.loadingProgressBar
 import com.dannyjung.githubapi.presenter.ui.component.repoListItem
 import com.dannyjung.githubapi.presenter.ui.component.space
 import com.dannyjung.githubapi.presenter.ui.epoxy.simpleEpoxyController
+import com.dannyjung.githubapi.presenter.ui.listener.addLoadMoreScrollListener
 import com.dannyjung.githubapi.presenter.ui.login.LoginState
 import com.dannyjung.githubapi.presenter.ui.login.LoginViewModel
 import com.dannyjung.githubapi.presenter.ui.utils.dpToPx
@@ -56,6 +59,9 @@ class StarFragment : BaseFragment<FragmentStarBinding>(FragmentStarBinding::infl
         binding.epoxyRecyclerView.run {
             layoutManager = LinearLayoutManager(requireContext())
             clearOnScrollListeners()
+            addLoadMoreScrollListener {
+                starViewModel.getStarredRepoNextPage()
+            }
             setController(epoxyController)
         }
     }
@@ -101,6 +107,10 @@ class StarFragment : BaseFragment<FragmentStarBinding>(FragmentStarBinding::infl
                 backgroundColor(R.color.gray_10)
                 height(requireContext().dpToPx(8))
             }
+        }
+
+        if (starState.getReposNextPageAsync is Loading) {
+            loadingProgressBar { id("loading_progress_bar") }
         }
     }
 
