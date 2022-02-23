@@ -1,7 +1,10 @@
 package com.dannyjung.githubapi.app.di.module
 
+import com.dannyjung.githubapi.data.local.dao.StarredRepoDao
 import com.dannyjung.githubapi.data.local.datasource.AuthLocalDataSource
 import com.dannyjung.githubapi.data.local.datasource.AuthLocalDataSourceImpl
+import com.dannyjung.githubapi.data.local.datasource.StarredRepoLocalDataSource
+import com.dannyjung.githubapi.data.local.datasource.StarredRepoLocalDataSourceImpl
 import com.dannyjung.githubapi.data.local.preference.SharedPreferenceManager
 import com.dannyjung.githubapi.data.remote.datasource.*
 import com.dannyjung.githubapi.data.remote.service.AuthService
@@ -43,4 +46,10 @@ object DatasourceModule {
     fun provideUserRemoteDataSource(
         userService: UserService
     ): UserRemoteDataSource = UserRemoteDatasourceImpl(userService)
+
+    @Singleton
+    @Provides
+    fun provideStarredRepoLocalDataSource(
+        starredRepoDao: StarredRepoDao
+    ): StarredRepoLocalDataSource = StarredRepoLocalDataSourceImpl(starredRepoDao)
 }
