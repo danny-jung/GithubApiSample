@@ -9,4 +9,10 @@ data class UserResponse(
     val login: String,
     @SerializedName("avatar_url")
     val avatarUrl: String?,
+    @SerializedName("company")
+    val company: String,
+    @SerializedName("location")
+    val location: String,
+    @SerializedName("html_url")
+    val htmlUrl: String
 )

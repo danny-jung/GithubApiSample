@@ -12,6 +12,9 @@ object UserMapper {
             id = userResponse.id,
             name = userResponse.login,
             avatarUrl = userResponse.avatarUrl,
+            company = userResponse.company,
+            location = userResponse.location,
+            url = userResponse.htmlUrl
         )
 
     fun mapperToUserRepos(
