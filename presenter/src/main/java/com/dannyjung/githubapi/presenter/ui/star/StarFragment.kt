@@ -5,11 +5,19 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.airbnb.mvrx.activityViewModel
+import com.dannyjung.githubapi.domain.mapper.RepoItemMapper
+import com.dannyjung.githubapi.domain.mapper.StarredRepoItemMapper
+import com.dannyjung.githubapi.presenter.R
 import com.dannyjung.githubapi.presenter.databinding.FragmentStarBinding
 import com.dannyjung.githubapi.presenter.ui.base.BaseFragment
+import com.dannyjung.githubapi.presenter.ui.component.repoListItem
+import com.dannyjung.githubapi.presenter.ui.component.space
+import com.dannyjung.githubapi.presenter.ui.epoxy.simpleEpoxyController
 import com.dannyjung.githubapi.presenter.ui.login.LoginState
 import com.dannyjung.githubapi.presenter.ui.login.LoginViewModel
+import com.dannyjung.githubapi.presenter.ui.utils.dpToPx
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -18,6 +26,8 @@ class StarFragment : BaseFragment<FragmentStarBinding>(FragmentStarBinding::infl
     private val starViewModel: StarViewModel by activityViewModel()
     private val loginViewModel: LoginViewModel by activityViewModel()
 
+    private val epoxyController by lazy { createEpoxyController() }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -25,6 +35,8 @@ class StarFragment : BaseFragment<FragmentStarBinding>(FragmentStarBinding::infl
 
         loginViewModel.onEach(LoginState::accessToken) { accessToken ->
             binding.loginButton.isVisible = accessToken == null
+            binding.epoxyRecyclerView.isVisible = accessToken != null
+
             if (accessToken != null) {
                 starViewModel.invalidate()
             }
@@ -39,7 +51,52 @@ class StarFragment : BaseFragment<FragmentStarBinding>(FragmentStarBinding::infl
                 }
             )
         }
+
+        binding.epoxyRecyclerView.run {
+            layoutManager = LinearLayoutManager(requireContext())
+            clearOnScrollListeners()
+            setController(epoxyController)
+        }
     }
 
-    override fun invalidate() = Unit
+    override fun invalidate() = epoxyController.requestModelBuild()
+
+    private fun createEpoxyController() = simpleEpoxyController(starViewModel) { starState ->
+        starState.repos?.forEach { item ->
+            repoListItem {
+                id("repo_list_item", item.id)
+                repoItem(RepoItemMapper.mapperToRepoItem(item))
+                repoUrl(item.url)
+                repoName(item.name)
+                description(item.description)
+                star(starState.allRepoIds?.contains(item.id) ?: false)
+                stargazersCount(item.stargazersCount)
+                watchersCount(item.watchersCount)
+                ownerAvatarUrl(item.owner.avatarUrl)
+                ownerName(item.owner.name)
+                onStarClick { repoItem, isStar ->
+                    val starredRepoItem = StarredRepoItemMapper.mapperToStarredRepoItem(repoItem)
+
+                    if (isStar) {
+                        starViewModel.deleteRepo(starredRepoItem)
+                    } else {
+                        starViewModel.addRepo(starredRepoItem)
+                    }
+                }
+                onClick { repoUrl ->
+                    startActivity(
+                        Intent(Intent.ACTION_VIEW).apply {
+                            data = Uri.parse(repoUrl)
+                        }
+                    )
+                }
+            }
+
+            space {
+                id("space", item.id)
+                backgroundColor(R.color.gray_10)
+                height(requireContext().dpToPx(8))
+            }
+        }
+    }
 }

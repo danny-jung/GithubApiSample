@@ -8,7 +8,9 @@ import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.airbnb.mvrx.Loading
+import com.airbnb.mvrx.activityViewModel
 import com.airbnb.mvrx.fragmentViewModel
+import com.dannyjung.githubapi.domain.mapper.StarredRepoItemMapper
 import com.dannyjung.githubapi.presenter.R
 import com.dannyjung.githubapi.presenter.databinding.FragmentSearchBinding
 import com.dannyjung.githubapi.presenter.ui.base.BaseFragment
@@ -17,6 +19,7 @@ import com.dannyjung.githubapi.presenter.ui.component.repoListItem
 import com.dannyjung.githubapi.presenter.ui.component.space
 import com.dannyjung.githubapi.presenter.ui.epoxy.simpleEpoxyController
 import com.dannyjung.githubapi.presenter.ui.listener.addLoadMoreScrollListener
+import com.dannyjung.githubapi.presenter.ui.star.StarViewModel
 import com.dannyjung.githubapi.presenter.ui.utils.dpToPx
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -24,6 +27,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding::inflate) {
 
     private val searchViewModel: SearchViewModel by fragmentViewModel()
+    private val starViewModel: StarViewModel by activityViewModel()
 
     private val epoxyController by lazy { createEpoxyController() }
 
@@ -64,20 +68,30 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
 
     override fun invalidate() = epoxyController.requestModelBuild()
 
-    private fun createEpoxyController() = simpleEpoxyController(searchViewModel) { searchState ->
+    private fun createEpoxyController() = simpleEpoxyController(
+        searchViewModel,
+        starViewModel
+    ) { searchState, starState ->
         searchState.searchRepo?.items?.forEach { item ->
             repoListItem {
                 id("repo_list_item", item.id)
-                repoId(item.id)
+                repoItem(item)
                 repoUrl(item.url)
                 repoName(item.name)
                 description(item.description)
+                star(starState.allRepoIds?.contains(item.id) ?: false)
                 stargazersCount(item.stargazersCount)
                 watchersCount(item.watchersCount)
                 ownerAvatarUrl(item.owner.avatarUrl)
                 ownerName(item.owner.name)
-                onStarClick { repoId ->
-                    // TODO
+                onStarClick { repoItem, isStar ->
+                    val starredRepoItem = StarredRepoItemMapper.mapperToStarredRepoItem(repoItem)
+
+                    if (isStar) {
+                        starViewModel.deleteRepo(starredRepoItem)
+                    } else {
+                        starViewModel.addRepo(starredRepoItem)
+                    }
                 }
                 onClick { repoUrl ->
                     startActivity(

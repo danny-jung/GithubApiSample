@@ -10,6 +10,7 @@ import com.airbnb.epoxy.ModelProp
 import com.airbnb.epoxy.ModelView
 import com.airbnb.epoxy.TextProp
 import com.bumptech.glide.Glide
+import com.dannyjung.githubapi.domain.model.RepoItem
 import com.dannyjung.githubapi.presenter.R
 import com.dannyjung.githubapi.presenter.databinding.ViewRepoListItemBinding
 import com.dannyjung.githubapi.presenter.ui.utils.dpToPx
@@ -29,11 +30,27 @@ class RepoListItem @JvmOverloads constructor(
         clipToPadding = false
     }
 
-    var repoId: Long? = null
+    var repoItem: RepoItem? = null
         @ModelProp set
 
     var repoUrl: String? = null
         @ModelProp set
+
+    var isStar: Boolean? = null
+        @ModelProp set(value) {
+            field = value
+
+            binding.stargazers.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                if (isStar == true) {
+                    R.drawable.ic_star_14dp
+                } else {
+                    R.drawable.ic_star_stroke_14dp
+                },
+                0,
+                0,
+                0
+            )
+        }
 
     @TextProp
     fun setRepoName(repoName: CharSequence?) {
@@ -43,20 +60,6 @@ class RepoListItem @JvmOverloads constructor(
     @TextProp
     fun setDescription(description: CharSequence?) {
         binding.description.text = description
-    }
-
-    @ModelProp
-    fun setStar(isStar: Boolean?) {
-        binding.stargazers.setCompoundDrawablesRelativeWithIntrinsicBounds(
-            if (isStar == true) {
-                R.drawable.ic_star_14dp
-            } else {
-                R.drawable.ic_star_stroke_14dp
-            },
-            0,
-            0,
-            0
-        )
     }
 
     @ModelProp
@@ -84,8 +87,15 @@ class RepoListItem @JvmOverloads constructor(
     }
 
     @CallbackProp
-    fun setOnStarClick(onClick: ((id: Long) -> Unit)?) {
-        binding.stargazers.setOnClickListener { repoId?.let { onClick?.invoke(it) } }
+    fun setOnStarClick(onClick: ((repoItem: RepoItem, isStar: Boolean) -> Unit)?) {
+        binding.stargazers.setOnClickListener {
+            val repoItem = repoItem
+            val isStar = isStar
+
+            if (repoItem != null && isStar != null) {
+                onClick?.invoke(repoItem, isStar)
+            }
+        }
     }
 
     @CallbackProp
