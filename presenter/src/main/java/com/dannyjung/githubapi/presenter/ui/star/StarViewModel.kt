@@ -6,7 +6,7 @@ import com.airbnb.mvrx.hilt.hiltMavericksViewModelFactory
 import com.dannyjung.githubapi.domain.model.StarredRepoItem
 import com.dannyjung.githubapi.domain.usecase.starredrepo.AddStarredRepoUseCase
 import com.dannyjung.githubapi.domain.usecase.starredrepo.DeleteStarredRepoUseCase
-import com.dannyjung.githubapi.domain.usecase.starredrepo.GetAllStarredRepoIdsUseCase
+import com.dannyjung.githubapi.domain.usecase.starredrepo.GetStarCountsUseCase
 import com.dannyjung.githubapi.domain.usecase.starredrepo.GetStarredReposUseCase
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
@@ -18,7 +18,7 @@ import java.io.IOException
 class StarViewModel @AssistedInject constructor(
     @Assisted initialState: StarState,
     private val getStarredReposUseCase: GetStarredReposUseCase,
-    private val getAllStarredRepoIdsUseCase: GetAllStarredRepoIdsUseCase,
+    private val getStarCountsUseCase: GetStarCountsUseCase,
     private val addStarredRepoUseCase: AddStarredRepoUseCase,
     private val deleteStarredRepoUseCase: DeleteStarredRepoUseCase
 ) : MavericksViewModel<StarState>(initialState) {
@@ -31,7 +31,7 @@ class StarViewModel @AssistedInject constructor(
         setState { copy(getReposAsync = Loading()) }
 
         val reposDeferred = async { getStarredReposUseCase(offset = 0) }
-        val repoIdsDeferred = async { getAllStarredRepoIdsUseCase() }
+        val repoIdsDeferred = async { getStarCountsUseCase() }
 
         val reposAsync = reposDeferred.await()
         val repoIdsAsync = repoIdsDeferred.await()
@@ -48,7 +48,7 @@ class StarViewModel @AssistedInject constructor(
                     Success(Unit)
                 },
                 repos = reposAsync(),
-                allRepoIds = repoIdsAsync()?.toSet()
+                allStarCounts = repoIdsAsync()?.map { it.id to it.stargazersCount }?.toMap()
             )
         }
     }
@@ -62,7 +62,7 @@ class StarViewModel @AssistedInject constructor(
             copy(
                 addRepoAsync = Loading(),
                 repos = repos?.plus(repoItem),
-                allRepoIds = allRepoIds?.plus(repoItem.id)
+                allStarCounts = allStarCounts?.plus(repoItem.id to repoItem.stargazersCount + 1)
             )
         }
 
@@ -76,10 +76,10 @@ class StarViewModel @AssistedInject constructor(
                 } else {
                     repos
                 },
-                allRepoIds = if (async is Fail) {
-                    allRepoIds?.minus(repoItem.id)
+                allStarCounts = if (async is Fail) {
+                    allStarCounts?.minus(repoItem.id)
                 } else {
-                    allRepoIds
+                    allStarCounts
                 }
             )
         }
@@ -94,7 +94,7 @@ class StarViewModel @AssistedInject constructor(
             copy(
                 deleteRepoAsync = Loading(),
                 repos = repos?.minus(repoItem),
-                allRepoIds = allRepoIds?.minus(repoItem.id)
+                allStarCounts = allStarCounts?.minus(repoItem.id)
             )
         }
 
@@ -108,10 +108,10 @@ class StarViewModel @AssistedInject constructor(
                 } else {
                     repos
                 },
-                allRepoIds = if (async is Fail) {
-                    allRepoIds?.plus(repoItem.id)
+                allStarCounts = if (async is Fail) {
+                    allStarCounts?.plus(repoItem.id to repoItem.stargazersCount)
                 } else {
-                    allRepoIds
+                    allStarCounts
                 }
             )
         }

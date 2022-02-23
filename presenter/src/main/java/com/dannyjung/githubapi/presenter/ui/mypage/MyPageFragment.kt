@@ -106,8 +106,11 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(FragmentMyPageBinding
                 repoUrl(item.url)
                 repoName(item.name)
                 description(item.description)
-                star(starState.allRepoIds?.contains(item.id) ?: false)
-                stargazersCount(item.stargazersCount)
+                star(starState.allStarCounts?.contains(item.id) ?: false)
+                stargazersCount(
+                    starState.allStarCounts?.get(item.id)
+                        ?: item.stargazersCount
+                )
                 watchersCount(item.watchersCount)
                 ownerAvatarUrl(item.owner.avatarUrl)
                 ownerName(item.owner.name)

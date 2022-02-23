@@ -10,5 +10,5 @@ data class StarState(
     val addRepoAsync: Async<Unit> = Uninitialized,
     val deleteRepoAsync: Async<Unit> = Uninitialized,
     val repos: List<StarredRepoItem>? = null,
-    val allRepoIds: Set<Long>? = null
+    val allStarCounts: Map<Long, Long>? = null
 ) : MavericksState

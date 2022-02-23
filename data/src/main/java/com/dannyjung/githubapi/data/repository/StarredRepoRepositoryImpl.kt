@@ -1,8 +1,10 @@
 package com.dannyjung.githubapi.data.repository
 
 import com.dannyjung.githubapi.data.local.datasource.StarredRepoLocalDataSource
+import com.dannyjung.githubapi.data.mapper.StarCountMapper
 import com.dannyjung.githubapi.data.mapper.StarredRepoMapper
 import com.dannyjung.githubapi.domain.di.qualifiers.IoDispatcher
+import com.dannyjung.githubapi.domain.model.StarCount
 import com.dannyjung.githubapi.domain.model.StarredRepoItem
 import com.dannyjung.githubapi.domain.repository.StarredRepoRepository
 import kotlinx.coroutines.CoroutineDispatcher
@@ -23,9 +25,11 @@ class StarredRepoRepositoryImpl @Inject constructor(
             }
         }
 
-    override suspend fun getAllStarredRepoIds(): List<Long> =
+    override suspend fun getStarCounts(): List<StarCount> =
         withContext(coroutineDispatcher) {
-            starredRepoLocalDataSource.getAllStarredRepoIds()
+            val starCounts = starredRepoLocalDataSource.getStarCounts()
+
+            StarCountMapper.mapperToStarCounts(starCounts)
         }
 
     override suspend fun insert(starredRepoItem: StarredRepoItem) =

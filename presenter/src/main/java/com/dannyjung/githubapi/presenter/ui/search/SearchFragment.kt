@@ -8,6 +8,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.airbnb.mvrx.Loading
+import com.airbnb.mvrx.UniqueOnly
 import com.airbnb.mvrx.activityViewModel
 import com.airbnb.mvrx.fragmentViewModel
 import com.dannyjung.githubapi.domain.mapper.StarredRepoItemMapper
@@ -36,7 +37,10 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
 
         initView()
 
-        searchViewModel.onEach(SearchState::searchRepoAsync) { searchRepoAsync ->
+        searchViewModel.onEach(
+            SearchState::searchRepoAsync,
+            UniqueOnly("search_repo_async")
+        ) { searchRepoAsync ->
             binding.progressBar.isVisible = searchRepoAsync is Loading
         }
     }
@@ -79,8 +83,11 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
                 repoUrl(item.url)
                 repoName(item.name)
                 description(item.description)
-                star(starState.allRepoIds?.contains(item.id) ?: false)
-                stargazersCount(item.stargazersCount)
+                star(starState.allStarCounts?.contains(item.id) ?: false)
+                stargazersCount(
+                    starState.allStarCounts?.get(item.id)
+                        ?: item.stargazersCount
+                )
                 watchersCount(item.watchersCount)
                 ownerAvatarUrl(item.owner.avatarUrl)
                 ownerName(item.owner.name)

@@ -10,7 +10,7 @@ import com.dannyjung.githubapi.domain.usecase.auth.RequestAccessTokenUseCase
 import com.dannyjung.githubapi.domain.usecase.search.SearchRepositoriesUseCase
 import com.dannyjung.githubapi.domain.usecase.starredrepo.AddStarredRepoUseCase
 import com.dannyjung.githubapi.domain.usecase.starredrepo.DeleteStarredRepoUseCase
-import com.dannyjung.githubapi.domain.usecase.starredrepo.GetAllStarredRepoIdsUseCase
+import com.dannyjung.githubapi.domain.usecase.starredrepo.GetStarCountsUseCase
 import com.dannyjung.githubapi.domain.usecase.starredrepo.GetStarredReposUseCase
 import com.dannyjung.githubapi.domain.usecase.user.GetUserReposUseCase
 import com.dannyjung.githubapi.domain.usecase.user.GetUserUseCase
@@ -59,9 +59,9 @@ object UseCaseModule {
     ) = GetStarredReposUseCase(starredRepoRepository)
 
     @Provides
-    fun provideGetAllStarredRepoIdsUseCase(
+    fun provideGetStarCountsUseCase(
         starredRepoRepository: StarredRepoRepository
-    ) = GetAllStarredRepoIdsUseCase(starredRepoRepository)
+    ) = GetStarCountsUseCase(starredRepoRepository)
 
     @Provides
     fun provideAddStarredRepoUseCase(
