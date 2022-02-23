@@ -1,6 +1,6 @@
 package com.dannyjung.githubapi.data.remote.service
 
-import com.dannyjung.githubapi.data.model.RepoItem
+import com.dannyjung.githubapi.data.model.RepoItemResponse
 import com.dannyjung.githubapi.data.model.UserResponse
 import retrofit2.http.GET
 import retrofit2.http.Header
@@ -20,5 +20,5 @@ interface UserService {
         @Path("user_name") userName: String,
         @Query("page") page: Int,
         @Query("per_page") pageSize: Int,
-    ): List<RepoItem>
+    ): List<RepoItemResponse>
 }

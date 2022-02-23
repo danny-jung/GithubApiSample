@@ -33,6 +33,6 @@ class UserRepositoryImpl @Inject constructor(
                 pageSize = pageSize
             )
 
-            UserMapper.mapperToUserRepos(userReposResponse)
+            UserMapper.mapperToUserRepoItems(userReposResponse)
         }
 }

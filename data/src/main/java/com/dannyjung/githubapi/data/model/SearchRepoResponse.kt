@@ -6,5 +6,5 @@ data class SearchRepoResponse(
     @SerializedName("total_count")
     val totalCount: Int,
     @SerializedName("items")
-    val items: List<RepoItem>,
+    val items: List<RepoItemResponse>,
 )

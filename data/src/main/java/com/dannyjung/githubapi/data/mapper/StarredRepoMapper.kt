@@ -1,11 +1,11 @@
 package com.dannyjung.githubapi.data.mapper
 
-import com.dannyjung.githubapi.data.model.StarredRepo
+import com.dannyjung.githubapi.data.model.StarredRepoResponse
 import com.dannyjung.githubapi.domain.model.StarredRepoItem
 
 object StarredRepoMapper {
 
-    fun mapperToStarredRepoItem(starredRepo: StarredRepo): StarredRepoItem =
+    fun mapperToStarredRepoItem(starredRepo: StarredRepoResponse): StarredRepoItem =
         StarredRepoItem(
             id = starredRepo.id,
             name = starredRepo.name,
@@ -20,8 +20,8 @@ object StarredRepoMapper {
             url = starredRepo.htmlUrl
         )
 
-    fun mapperToStarredRepo(starredRepoItem: StarredRepoItem): StarredRepo =
-        StarredRepo(
+    fun mapperToStarredRepoResponse(starredRepoItem: StarredRepoItem): StarredRepoResponse =
+        StarredRepoResponse(
             id = starredRepoItem.id,
             name = starredRepoItem.name,
             description = starredRepoItem.description,

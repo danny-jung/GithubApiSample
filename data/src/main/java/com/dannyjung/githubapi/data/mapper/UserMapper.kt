@@ -1,7 +1,8 @@
 package com.dannyjung.githubapi.data.mapper
 
-import com.dannyjung.githubapi.data.model.RepoItem
+import com.dannyjung.githubapi.data.model.RepoItemResponse
 import com.dannyjung.githubapi.data.model.UserResponse
+import com.dannyjung.githubapi.domain.model.RepoItem
 import com.dannyjung.githubapi.domain.model.User
 
 object UserMapper {
@@ -16,15 +17,13 @@ object UserMapper {
             url = userResponse.htmlUrl
         )
 
-    fun mapperToUserRepos(
-        userReposResponse: List<RepoItem>
-    ): List<com.dannyjung.githubapi.domain.model.RepoItem> =
-        userReposResponse.map {
-            com.dannyjung.githubapi.domain.model.RepoItem(
+    fun mapperToUserRepoItems(repoItems: List<RepoItemResponse>): List<RepoItem> =
+        repoItems.map {
+            RepoItem(
                 id = it.id,
                 name = it.name,
                 description = it.description,
-                owner = com.dannyjung.githubapi.domain.model.RepoItem.Owner(
+                owner = RepoItem.Owner(
                     id = it.owner.id,
                     name = it.owner.login,
                     avatarUrl = it.owner.avatarUrl

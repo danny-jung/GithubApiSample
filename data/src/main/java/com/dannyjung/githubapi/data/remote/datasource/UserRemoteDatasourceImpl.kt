@@ -1,6 +1,6 @@
 package com.dannyjung.githubapi.data.remote.datasource
 
-import com.dannyjung.githubapi.data.model.RepoItem
+import com.dannyjung.githubapi.data.model.RepoItemResponse
 import com.dannyjung.githubapi.data.model.UserResponse
 import com.dannyjung.githubapi.data.remote.service.UserService
 
@@ -16,7 +16,7 @@ class UserRemoteDatasourceImpl(
         userName: String,
         page: Int,
         pageSize: Int
-    ): List<RepoItem> = userService.getUserRepos(
+    ): List<RepoItemResponse> = userService.getUserRepos(
         token = "token $token",
         userName = userName,
         page = page,

@@ -35,7 +35,7 @@ class StarredRepoRepositoryImpl @Inject constructor(
     override suspend fun insert(starredRepoItem: StarredRepoItem) =
         withContext(coroutineDispatcher) {
             starredRepoLocalDataSource.insert(
-                StarredRepoMapper.mapperToStarredRepo(starredRepoItem)
+                StarredRepoMapper.mapperToStarredRepoResponse(starredRepoItem)
             )
         }
 

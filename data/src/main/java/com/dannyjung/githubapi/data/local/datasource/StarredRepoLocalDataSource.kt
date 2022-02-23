@@ -1,15 +1,15 @@
 package com.dannyjung.githubapi.data.local.datasource
 
-import com.dannyjung.githubapi.data.model.StarCount
-import com.dannyjung.githubapi.data.model.StarredRepo
+import com.dannyjung.githubapi.data.model.StarCountResponse
+import com.dannyjung.githubapi.data.model.StarredRepoResponse
 
 interface StarredRepoLocalDataSource {
 
-    suspend fun getStarredRepos(limit: Int, offset: Int): List<StarredRepo>
+    suspend fun getStarredRepos(limit: Int, offset: Int): List<StarredRepoResponse>
 
-    suspend fun getStarCounts(): List<StarCount>
+    suspend fun getStarCounts(): List<StarCountResponse>
 
-    suspend fun insert(starredRepo: StarredRepo)
+    suspend fun insert(starredRepo: StarredRepoResponse)
 
     suspend fun delete(id: Long)
 

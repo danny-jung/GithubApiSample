@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "starred_repo")
-data class StarredRepo(
+data class StarredRepoResponse(
     @PrimaryKey val id: Long,
     @ColumnInfo(name = "first_name") val name: String,
     @ColumnInfo(name = "description") val description: String?,

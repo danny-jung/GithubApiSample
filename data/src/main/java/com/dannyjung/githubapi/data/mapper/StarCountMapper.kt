@@ -1,14 +1,13 @@
 package com.dannyjung.githubapi.data.mapper
 
-import com.dannyjung.githubapi.data.model.StarCount
+import com.dannyjung.githubapi.data.model.StarCountResponse
+import com.dannyjung.githubapi.domain.model.StarCount
 
 object StarCountMapper {
 
-    fun mapperToStarCounts(
-        starCounts: List<StarCount>
-    ): List<com.dannyjung.githubapi.domain.model.StarCount> =
+    fun mapperToStarCounts(starCounts: List<StarCountResponse>): List<StarCount> =
         starCounts.map {
-            com.dannyjung.githubapi.domain.model.StarCount(
+            StarCount(
                 id = it.id,
                 stargazersCount = it.stargazersCount
             )

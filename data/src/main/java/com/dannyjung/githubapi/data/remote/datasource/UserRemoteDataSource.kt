@@ -1,6 +1,6 @@
 package com.dannyjung.githubapi.data.remote.datasource
 
-import com.dannyjung.githubapi.data.model.RepoItem
+import com.dannyjung.githubapi.data.model.RepoItemResponse
 import com.dannyjung.githubapi.data.model.UserResponse
 
 interface UserRemoteDataSource {
@@ -12,5 +12,5 @@ interface UserRemoteDataSource {
         userName: String,
         page: Int,
         pageSize: Int,
-    ): List<RepoItem>
+    ): List<RepoItemResponse>
 }

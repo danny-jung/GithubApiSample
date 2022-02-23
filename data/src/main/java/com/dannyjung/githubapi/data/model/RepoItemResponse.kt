@@ -2,7 +2,7 @@ package com.dannyjung.githubapi.data.model
 
 import com.google.gson.annotations.SerializedName
 
-data class RepoItem(
+data class RepoItemResponse(
     @SerializedName("id")
     val id: Long,
     @SerializedName("name")
