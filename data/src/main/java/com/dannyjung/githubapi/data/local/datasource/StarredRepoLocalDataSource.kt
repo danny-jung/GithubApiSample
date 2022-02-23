@@ -12,4 +12,6 @@ interface StarredRepoLocalDataSource {
     suspend fun insert(starredRepo: StarredRepo)
 
     suspend fun delete(id: Long)
+
+    suspend fun deleteAll()
 }

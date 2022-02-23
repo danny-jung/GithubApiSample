@@ -10,7 +10,7 @@ class ClearAccessTokenUseCase @Inject constructor(
     private val authRepository: AuthRepository
 ) {
 
-    operator fun invoke(): Async<Unit> =
+    suspend operator fun invoke(): Async<Unit> =
         try {
             authRepository.clear()
             Success(Unit)

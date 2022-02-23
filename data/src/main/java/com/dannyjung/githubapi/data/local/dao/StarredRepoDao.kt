@@ -21,4 +21,7 @@ interface StarredRepoDao {
 
     @Query("DELETE FROM starred_repo WHERE id = :id")
     suspend fun delete(id: Long)
+
+    @Query("DELETE FROM starred_repo")
+    suspend fun deleteAll()
 }

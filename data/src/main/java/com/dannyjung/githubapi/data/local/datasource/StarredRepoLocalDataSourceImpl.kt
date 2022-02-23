@@ -20,4 +20,7 @@ class StarredRepoLocalDataSourceImpl @Inject constructor(
 
     override suspend fun delete(id: Long) =
         starredRepoDao.delete(id)
+
+    override suspend fun deleteAll() =
+        starredRepoDao.deleteAll()
 }

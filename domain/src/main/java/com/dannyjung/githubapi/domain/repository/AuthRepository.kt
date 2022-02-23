@@ -11,5 +11,5 @@ interface AuthRepository {
 
     suspend fun requestAccessToken(code: String): AccessToken
 
-    fun clear()
+    suspend fun clear()
 }

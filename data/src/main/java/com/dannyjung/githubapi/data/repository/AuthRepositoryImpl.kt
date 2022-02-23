@@ -1,6 +1,7 @@
 package com.dannyjung.githubapi.data.repository
 
 import com.dannyjung.githubapi.data.local.datasource.AuthLocalDataSource
+import com.dannyjung.githubapi.data.local.datasource.StarredRepoLocalDataSource
 import com.dannyjung.githubapi.data.mapper.AuthMapper
 import com.dannyjung.githubapi.data.remote.datasource.AuthRemoteDataSource
 import com.dannyjung.githubapi.domain.di.qualifiers.IoDispatcher
@@ -14,7 +15,8 @@ import javax.inject.Inject
 class AuthRepositoryImpl @Inject constructor(
     @IoDispatcher private val coroutineDispatcher: CoroutineDispatcher,
     private val authLocalDataSource: AuthLocalDataSource,
-    private val authRemoteDataSource: AuthRemoteDataSource
+    private val authRemoteDataSource: AuthRemoteDataSource,
+    private val starredRepoLocalDataSource: StarredRepoLocalDataSource
 ) : AuthRepository {
 
     override val stream: Flow<String?>
@@ -32,6 +34,10 @@ class AuthRepositoryImpl @Inject constructor(
             AuthMapper.mapperToAccessToken(accessTokenResponse)
         }
 
-    override fun clear() = authLocalDataSource.clear()
+    override suspend fun clear() =
+        withContext(coroutineDispatcher) {
+            authLocalDataSource.clear()
+            starredRepoLocalDataSource.deleteAll()
+        }
 
 }
