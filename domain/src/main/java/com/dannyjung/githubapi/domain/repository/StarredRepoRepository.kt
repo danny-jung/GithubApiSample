@@ -11,5 +11,5 @@ interface StarredRepoRepository {
 
     suspend fun insert(starredRepoItem: StarredRepoItem)
 
-    suspend fun delete(starredRepoItem: StarredRepoItem)
+    suspend fun delete(id: Long)
 }

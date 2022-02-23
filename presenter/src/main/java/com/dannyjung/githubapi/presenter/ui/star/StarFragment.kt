@@ -88,7 +88,7 @@ class StarFragment : BaseFragment<FragmentStarBinding>(FragmentStarBinding::infl
                     val starredRepoItem = StarredRepoItemMapper.mapperToStarredRepoItem(repoItem)
 
                     if (isStar) {
-                        starViewModel.deleteRepo(starredRepoItem)
+                        starViewModel.deleteRepo(starredRepoItem.id)
                     } else {
                         starViewModel.addRepo(starredRepoItem)
                     }

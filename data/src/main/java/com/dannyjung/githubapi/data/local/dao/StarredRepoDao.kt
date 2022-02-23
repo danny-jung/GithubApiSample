@@ -1,6 +1,9 @@
 package com.dannyjung.githubapi.data.local.dao
 
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
 import com.dannyjung.githubapi.data.model.StarCount
 import com.dannyjung.githubapi.data.model.StarredRepo
 
@@ -16,6 +19,6 @@ interface StarredRepoDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(starredRepo: StarredRepo)
 
-    @Delete
-    suspend fun delete(starredRepo: StarredRepo)
+    @Query("DELETE FROM starred_repo WHERE id = :id")
+    suspend fun delete(id: Long)
 }

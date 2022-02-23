@@ -39,10 +39,8 @@ class StarredRepoRepositoryImpl @Inject constructor(
             )
         }
 
-    override suspend fun delete(starredRepoItem: StarredRepoItem) =
+    override suspend fun delete(id: Long) =
         withContext(coroutineDispatcher) {
-            starredRepoLocalDataSource.delete(
-                StarredRepoMapper.mapperToStarredRepo(starredRepoItem)
-            )
+            starredRepoLocalDataSource.delete(id)
         }
 }

@@ -78,26 +78,29 @@ class StarViewModel @AssistedInject constructor(
 
         if (state.addRepoAsync is Loading) return@launch
 
+        val updatedRepoItem = repoItem.copy(stargazersCount = repoItem.stargazersCount + 1)
+
         setState {
             copy(
                 addRepoAsync = Loading(),
-                repos = repos?.plus(repoItem),
-                allStarCounts = allStarCounts?.plus(repoItem.id to repoItem.stargazersCount + 1)
+                repos = repos?.plus(updatedRepoItem),
+                allStarCounts = allStarCounts
+                    ?.plus(updatedRepoItem.id to updatedRepoItem.stargazersCount)
             )
         }
 
-        val async = addStarredRepoUseCase(repoItem)
+        val async = addStarredRepoUseCase(updatedRepoItem)
 
         setState {
             copy(
                 addRepoAsync = async,
                 repos = if (async is Fail) {
-                    repos?.minus(repoItem)
+                    repos?.minus(updatedRepoItem)
                 } else {
                     repos
                 },
                 allStarCounts = if (async is Fail) {
-                    allStarCounts?.minus(repoItem.id)
+                    allStarCounts?.minus(updatedRepoItem.id)
                 } else {
                     allStarCounts
                 }
@@ -105,31 +108,33 @@ class StarViewModel @AssistedInject constructor(
         }
     }
 
-    fun deleteRepo(repoItem: StarredRepoItem) = viewModelScope.launch {
+    fun deleteRepo(id: Long) = viewModelScope.launch {
         val state = awaitState()
 
         if (state.deleteRepoAsync is Loading) return@launch
 
+        val tempRepoItem = state.repos?.find { it.id == id }
+
         setState {
             copy(
                 deleteRepoAsync = Loading(),
-                repos = repos?.minus(repoItem),
-                allStarCounts = allStarCounts?.minus(repoItem.id)
+                repos = repos?.filterNot { it.id == id },
+                allStarCounts = allStarCounts?.filterNot { it.key == id }
             )
         }
 
-        val async = deleteStarredRepoUseCase(repoItem)
+        val async = deleteStarredRepoUseCase(id)
 
         setState {
             copy(
                 deleteRepoAsync = async,
-                repos = if (async is Fail) {
-                    repos?.plus(repoItem)
+                repos = if (async is Fail && tempRepoItem != null) {
+                    repos?.plus(tempRepoItem)
                 } else {
                     repos
                 },
-                allStarCounts = if (async is Fail) {
-                    allStarCounts?.plus(repoItem.id to repoItem.stargazersCount)
+                allStarCounts = if (async is Fail && tempRepoItem != null) {
+                    allStarCounts?.plus(tempRepoItem.id to tempRepoItem.stargazersCount)
                 } else {
                     allStarCounts
                 }

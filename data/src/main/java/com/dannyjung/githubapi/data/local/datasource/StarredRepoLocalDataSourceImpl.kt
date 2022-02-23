@@ -18,6 +18,6 @@ class StarredRepoLocalDataSourceImpl @Inject constructor(
     override suspend fun insert(starredRepo: StarredRepo) =
         starredRepoDao.insert(starredRepo)
 
-    override suspend fun delete(starredRepo: StarredRepo) =
-        starredRepoDao.delete(starredRepo)
+    override suspend fun delete(id: Long) =
+        starredRepoDao.delete(id)
 }
