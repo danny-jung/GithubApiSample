@@ -1,4 +1,4 @@
-package com.dannyjung.githubapi.presenter.di.qualifiers
+package com.dannyjung.githubapi.app.di.qualifiers
 
 import javax.inject.Qualifier
 

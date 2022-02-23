@@ -1,6 +1,5 @@
-package com.dannyjung.githubapi.presenter.di.module
+package com.dannyjung.githubapi.app.di.module
 
-import com.dannyjung.githubapi.data.di.qualifiers.IoDispatcher
 import com.dannyjung.githubapi.data.local.datasource.AuthLocalDataSource
 import com.dannyjung.githubapi.data.local.datasource.AuthLocalDataSourceImpl
 import com.dannyjung.githubapi.data.local.preference.SharedPreferenceManager
@@ -8,6 +7,7 @@ import com.dannyjung.githubapi.data.remote.datasource.*
 import com.dannyjung.githubapi.data.remote.service.AuthService
 import com.dannyjung.githubapi.data.remote.service.SearchService
 import com.dannyjung.githubapi.data.remote.service.UserService
+import com.dannyjung.githubapi.domain.di.qualifiers.IoDispatcher
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

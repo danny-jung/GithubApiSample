@@ -3,7 +3,7 @@ package com.dannyjung.githubapi.presenter.ui.search
 import com.airbnb.mvrx.*
 import com.airbnb.mvrx.hilt.AssistedViewModelFactory
 import com.airbnb.mvrx.hilt.hiltMavericksViewModelFactory
-import com.dannyjung.githubapi.data.di.qualifiers.IoDispatcher
+import com.dannyjung.githubapi.domain.di.qualifiers.IoDispatcher
 import com.dannyjung.githubapi.domain.usecase.search.SearchRepositoriesUseCase
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory

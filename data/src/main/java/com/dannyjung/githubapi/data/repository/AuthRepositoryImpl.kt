@@ -1,9 +1,9 @@
 package com.dannyjung.githubapi.data.repository
 
-import com.dannyjung.githubapi.data.di.qualifiers.IoDispatcher
 import com.dannyjung.githubapi.data.local.datasource.AuthLocalDataSource
 import com.dannyjung.githubapi.data.mapper.AuthMapper
 import com.dannyjung.githubapi.data.remote.datasource.AuthRemoteDataSource
+import com.dannyjung.githubapi.domain.di.qualifiers.IoDispatcher
 import com.dannyjung.githubapi.domain.model.AccessToken
 import com.dannyjung.githubapi.domain.repository.AuthRepository
 import kotlinx.coroutines.CoroutineDispatcher

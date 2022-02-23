@@ -1,9 +1,9 @@
-package com.dannyjung.githubapi.data.di.module
+package com.dannyjung.githubapi.domain.di.module
 
-import com.dannyjung.githubapi.data.di.qualifiers.DefaultDispatcher
-import com.dannyjung.githubapi.data.di.qualifiers.IoDispatcher
-import com.dannyjung.githubapi.data.di.qualifiers.MainDispatcher
-import com.dannyjung.githubapi.data.di.qualifiers.MainImmediateDispatcher
+import com.dannyjung.githubapi.domain.di.qualifiers.DefaultDispatcher
+import com.dannyjung.githubapi.domain.di.qualifiers.IoDispatcher
+import com.dannyjung.githubapi.domain.di.qualifiers.MainDispatcher
+import com.dannyjung.githubapi.domain.di.qualifiers.MainImmediateDispatcher
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

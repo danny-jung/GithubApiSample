@@ -10,3 +10,4 @@ rootProject.name = "GithubApi"
 include ':presenter'
 include ':data'
 include ':domain'
+include ':app'

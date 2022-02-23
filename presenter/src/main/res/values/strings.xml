@@ -1,6 +1,4 @@
 <resources>
-    <string name="app_name">GithubApi</string>
-    
     <string name="authorization_callback_url_scheme">danny</string>
     <string name="authorization_callback_url_host">authorization</string>
     

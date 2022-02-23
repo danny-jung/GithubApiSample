@@ -1,4 +1,4 @@
-package com.dannyjung.githubapi.presenter.di.module
+package com.dannyjung.githubapi.app.di.module
 
 import com.dannyjung.githubapi.data.local.preference.SharedPreferenceManager
 import com.dannyjung.githubapi.data.local.preference.SharedPreferenceManagerImpl

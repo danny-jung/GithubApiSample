@@ -1,11 +1,11 @@
-package com.dannyjung.githubapi.presenter.di.module
+package com.dannyjung.githubapi.app.di.module
 
+import com.dannyjung.githubapi.app.BuildConfig
+import com.dannyjung.githubapi.app.di.qualifiers.AuthRetrofit
+import com.dannyjung.githubapi.app.di.qualifiers.GitHubRetrofit
 import com.dannyjung.githubapi.data.remote.service.AuthService
 import com.dannyjung.githubapi.data.remote.service.SearchService
 import com.dannyjung.githubapi.data.remote.service.UserService
-import com.dannyjung.githubapi.presenter.BuildConfig
-import com.dannyjung.githubapi.presenter.di.qualifiers.AuthRetrofit
-import com.dannyjung.githubapi.presenter.di.qualifiers.GitHubRetrofit
 import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
