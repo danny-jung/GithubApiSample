@@ -2,11 +2,16 @@ package com.dannyjung.githubapi.app.di.module
 
 import com.dannyjung.githubapi.domain.repository.AuthRepository
 import com.dannyjung.githubapi.domain.repository.SearchRepository
+import com.dannyjung.githubapi.domain.repository.StarredRepoRepository
 import com.dannyjung.githubapi.domain.repository.UserRepository
 import com.dannyjung.githubapi.domain.usecase.auth.AccessTokenStreamUseCase
 import com.dannyjung.githubapi.domain.usecase.auth.ClearAccessTokenUseCase
 import com.dannyjung.githubapi.domain.usecase.auth.RequestAccessTokenUseCase
 import com.dannyjung.githubapi.domain.usecase.search.SearchRepositoriesUseCase
+import com.dannyjung.githubapi.domain.usecase.starredrepo.AddStarredRepoUseCase
+import com.dannyjung.githubapi.domain.usecase.starredrepo.DeleteStarredRepoUseCase
+import com.dannyjung.githubapi.domain.usecase.starredrepo.GetAllStarredRepoIdsUseCase
+import com.dannyjung.githubapi.domain.usecase.starredrepo.GetStarredReposUseCase
 import com.dannyjung.githubapi.domain.usecase.user.GetUserReposUseCase
 import com.dannyjung.githubapi.domain.usecase.user.GetUserUseCase
 import dagger.Module
@@ -47,4 +52,24 @@ object UseCaseModule {
     fun provideGetUserReposUseCase(
         userRepository: UserRepository
     ) = GetUserReposUseCase(userRepository)
+
+    @Provides
+    fun provideGetStarredReposUseCase(
+        starredRepoRepository: StarredRepoRepository
+    ) = GetStarredReposUseCase(starredRepoRepository)
+
+    @Provides
+    fun provideGetAllStarredRepoIdsUseCase(
+        starredRepoRepository: StarredRepoRepository
+    ) = GetAllStarredRepoIdsUseCase(starredRepoRepository)
+
+    @Provides
+    fun provideAddStarredRepoUseCase(
+        starredRepoRepository: StarredRepoRepository
+    ) = AddStarredRepoUseCase(starredRepoRepository)
+
+    @Provides
+    fun provideDeleteStarredRepoUseCase(
+        starredRepoRepository: StarredRepoRepository
+    ) = DeleteStarredRepoUseCase(starredRepoRepository)
 }
