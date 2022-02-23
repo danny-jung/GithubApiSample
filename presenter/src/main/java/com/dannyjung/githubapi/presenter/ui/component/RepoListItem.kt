@@ -26,7 +26,7 @@ class RepoListItem @JvmOverloads constructor(
     private val binding = ViewRepoListItemBinding.inflate(LayoutInflater.from(context), this)
 
     init {
-        setPadding(context.dpToPx(12))
+        setPadding(context.dpToPx(12), context.dpToPx(12), context.dpToPx(12), 0)
         clipToPadding = false
     }
 
