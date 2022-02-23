@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
 import com.airbnb.mvrx.activityViewModel
-import com.airbnb.mvrx.fragmentViewModel
 import com.dannyjung.githubapi.presenter.databinding.FragmentStarBinding
 import com.dannyjung.githubapi.presenter.ui.base.BaseFragment
 import com.dannyjung.githubapi.presenter.ui.login.LoginState
@@ -16,7 +15,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class StarFragment : BaseFragment<FragmentStarBinding>(FragmentStarBinding::inflate) {
 
-    private val starViewModel: StarViewModel by fragmentViewModel()
+    private val starViewModel: StarViewModel by activityViewModel()
     private val loginViewModel: LoginViewModel by activityViewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -26,6 +25,9 @@ class StarFragment : BaseFragment<FragmentStarBinding>(FragmentStarBinding::infl
 
         loginViewModel.onEach(LoginState::accessToken) { accessToken ->
             binding.loginButton.isVisible = accessToken == null
+            if (accessToken != null) {
+                starViewModel.invalidate()
+            }
         }
     }
 

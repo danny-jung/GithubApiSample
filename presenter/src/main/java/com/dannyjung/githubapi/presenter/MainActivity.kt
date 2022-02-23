@@ -9,6 +9,7 @@ import com.airbnb.mvrx.MavericksView
 import com.airbnb.mvrx.viewModel
 import com.dannyjung.githubapi.presenter.databinding.ActivityMainBinding
 import com.dannyjung.githubapi.presenter.ui.login.LoginViewModel
+import com.dannyjung.githubapi.presenter.ui.star.StarViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -17,6 +18,7 @@ class MainActivity : AppCompatActivity(), MavericksView {
     private lateinit var binding: ActivityMainBinding
 
     private val loginViewModel: LoginViewModel by viewModel()
+    private val starViewModel: StarViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +28,8 @@ class MainActivity : AppCompatActivity(), MavericksView {
 
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
         binding.navView.setupWithNavController(navController)
+
+        starViewModel.invalidate()
     }
 
     override fun onNewIntent(intent: Intent?) {
