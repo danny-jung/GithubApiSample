@@ -6,15 +6,18 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.airbnb.mvrx.Loading
 import com.airbnb.mvrx.activityViewModel
 import com.airbnb.mvrx.fragmentViewModel
 import com.dannyjung.githubapi.presenter.R
 import com.dannyjung.githubapi.presenter.databinding.FragmentMyPageBinding
 import com.dannyjung.githubapi.presenter.ui.base.BaseFragment
+import com.dannyjung.githubapi.presenter.ui.component.loadingProgressBar
 import com.dannyjung.githubapi.presenter.ui.component.profile
 import com.dannyjung.githubapi.presenter.ui.component.repoListItem
 import com.dannyjung.githubapi.presenter.ui.component.space
 import com.dannyjung.githubapi.presenter.ui.epoxy.simpleEpoxyController
+import com.dannyjung.githubapi.presenter.ui.listener.addLoadMoreScrollListener
 import com.dannyjung.githubapi.presenter.ui.login.LoginState
 import com.dannyjung.githubapi.presenter.ui.login.LoginViewModel
 import com.dannyjung.githubapi.presenter.ui.utils.dpToPx
@@ -44,6 +47,10 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(FragmentMyPageBinding
 
         binding.epoxyRecyclerView.run {
             layoutManager = LinearLayoutManager(requireContext())
+            clearOnScrollListeners()
+            addLoadMoreScrollListener {
+                myPageViewModel.getMyRepositoriesNextPage()
+            }
             setController(epoxyController)
         }
     }
@@ -102,6 +109,10 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(FragmentMyPageBinding
                 backgroundColor(R.color.gray_10)
                 height(requireContext().dpToPx(8))
             }
+        }
+
+        if (myPageState.myRepoNextPageAsync is Loading) {
+            loadingProgressBar { id("loading_progress_bar") }
         }
     }
 }

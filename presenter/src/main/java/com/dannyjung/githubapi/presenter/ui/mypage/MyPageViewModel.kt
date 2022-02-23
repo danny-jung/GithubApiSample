@@ -35,7 +35,8 @@ class MyPageViewModel @AssistedInject constructor(
             copy(
                 initialAsync = Success(Unit),
                 user = user(),
-                userRepos = userRepos?.invoke()
+                userRepos = userRepos?.invoke(),
+                page = 1
             )
         }
     }
@@ -45,9 +46,30 @@ class MyPageViewModel @AssistedInject constructor(
             copy(
                 initialAsync = Uninitialized,
                 user = null,
-                userRepos = null
+                userRepos = null,
+                page = 1
             )
         }
+
+    fun getMyRepositoriesNextPage() = viewModelScope.launch {
+        val state = awaitState()
+
+        if (state.initialAsync !is Success ||
+            state.user == null ||
+            state.myRepoNextPageAsync is Loading
+        ) return@launch
+
+        setState { copy(myRepoNextPageAsync = Loading()) }
+
+        val async = getUserReposUseCase(state.user.name, state.page + 1)
+
+        setState {
+            copy(
+                myRepoNextPageAsync = async,
+                userRepos = userRepos?.plus((async() ?: emptyList()))
+            )
+        }
+    }
 
     @AssistedFactory
     interface Factory : AssistedViewModelFactory<MyPageViewModel, MyPageState> {

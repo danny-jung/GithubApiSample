@@ -8,6 +8,8 @@ import com.dannyjung.githubapi.domain.model.User
 
 data class MyPageState(
     val initialAsync: Async<Unit> = Uninitialized,
+    val myRepoNextPageAsync: Async<List<RepoItem>> = Uninitialized,
     val user: User? = null,
-    val userRepos: List<RepoItem>? = null
+    val userRepos: List<RepoItem>? = null,
+    val page: Int = 1
 ) : MavericksState
