@@ -39,8 +39,12 @@ class MainActivity : AppCompatActivity(), MavericksView {
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
 
-        intent?.data?.getQueryParameter(CODE)?.let { code ->
-            loginViewModel.requestAccessToken(code)
+        if (intent?.data?.scheme == getString(R.string.authorization_callback_url_scheme) &&
+            intent.data?.host == getString(R.string.authorization_callback_url_host)
+        ) {
+            intent.data?.getQueryParameter(CODE)?.let { code ->
+                loginViewModel.requestAccessToken(code)
+            }
         }
     }
 
