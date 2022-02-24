@@ -5,9 +5,19 @@ plugins {
     id 'dagger.hilt.android.plugin'
 }
 
+def properties = new Properties()
+properties.load(new FileInputStream(project.rootProject.file('local.properties')))
+
 android {
     compileSdk 32
 
+    defaultConfig {
+        def clientId = properties.getProperty("CLIENT_ID")
+        def clientSecret = properties.getProperty("CLIENT_SECRET")
+
+        buildConfigField("String", "CLIENT_ID", "\"$clientId\"")
+        buildConfigField("String", "CLIENT_SECRET", "\"$clientSecret\"")
+    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
