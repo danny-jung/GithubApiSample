@@ -21,6 +21,7 @@
 
 ## Prerequisites
 - `CLIENT_ID`, `CLIENT_SECRET` environment variable registration
+- Authorization callback url : `danny://authorization`
 
 
 ## Screen Shot
