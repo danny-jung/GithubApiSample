@@ -1,10 +1,9 @@
 # Github Api Sample
 
-## Description
-- Sample project to search for Github Repos.
-- Gitub Repo can be listed by Star.
+Sample project to search for Github Repos. 
+Gitub Repos can be listed by Star.
 
-## Skill
+## Languages and Libraries used
 - `Kotlin`
 - `View Binding`
 - `Coroutine`
