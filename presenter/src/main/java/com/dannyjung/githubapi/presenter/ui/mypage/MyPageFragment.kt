@@ -40,6 +40,13 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(FragmentMyPageBinding
 
         initView()
 
+        myPageViewModel.onEach(
+            MyPageState::initialAsync,
+            UniqueOnly("initial_async")
+        ) { initialAsync ->
+            binding.progressBar.isVisible = initialAsync is Loading
+        }
+
         loginViewModel.onEach(
             LoginState::accessToken,
             UniqueOnly("my_page_access_token")
@@ -51,15 +58,6 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(FragmentMyPageBinding
                 myPageViewModel.initialize()
             }
         }
-
-        binding.epoxyRecyclerView.run {
-            layoutManager = LinearLayoutManager(requireContext())
-            clearOnScrollListeners()
-            addLoadMoreScrollListener {
-                myPageViewModel.getMyRepositoriesNextPage()
-            }
-            setController(epoxyController)
-        }
     }
 
     private fun initView() {
@@ -69,6 +67,15 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(FragmentMyPageBinding
                     data = Uri.parse(loginViewModel.getAuthorizeUrl())
                 }
             )
+        }
+
+        binding.epoxyRecyclerView.run {
+            layoutManager = LinearLayoutManager(requireContext())
+            clearOnScrollListeners()
+            addLoadMoreScrollListener {
+                myPageViewModel.getMyRepositoriesNextPage()
+            }
+            setController(epoxyController)
         }
     }
 

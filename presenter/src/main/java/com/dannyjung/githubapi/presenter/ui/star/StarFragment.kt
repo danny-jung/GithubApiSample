@@ -37,7 +37,17 @@ class StarFragment : BaseFragment<FragmentStarBinding>(FragmentStarBinding::infl
 
         initView()
 
-        loginViewModel.onEach(LoginState::accessToken, UniqueOnly("star_access_token")) { accessToken ->
+        starViewModel.onEach(
+            StarState::getReposAsync,
+            UniqueOnly("get_repos_async")
+        ) { getReposAsync ->
+            binding.progressBar.isVisible = getReposAsync is Loading
+        }
+
+        loginViewModel.onEach(
+            LoginState::accessToken,
+            UniqueOnly("star_access_token")
+        ) { accessToken ->
             binding.loginButton.isVisible = accessToken == null
             binding.epoxyRecyclerView.isVisible = accessToken != null
 
