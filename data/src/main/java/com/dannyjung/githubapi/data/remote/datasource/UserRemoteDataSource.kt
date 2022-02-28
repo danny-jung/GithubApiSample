@@ -5,10 +5,9 @@ import com.dannyjung.githubapi.data.model.UserResponse
 
 interface UserRemoteDataSource {
 
-    suspend fun getUser(token: String?): UserResponse
+    suspend fun getUser(): UserResponse
 
     suspend fun getUserRepos(
-        token: String?,
         userName: String,
         page: Int,
         pageSize: Int,

@@ -3,9 +3,12 @@ package com.dannyjung.githubapi.app.di.module
 import com.dannyjung.githubapi.app.BuildConfig
 import com.dannyjung.githubapi.app.di.qualifiers.AuthRetrofit
 import com.dannyjung.githubapi.app.di.qualifiers.GitHubRetrofit
+import com.dannyjung.githubapi.data.local.datasource.AuthLocalDataSource
+import com.dannyjung.githubapi.data.remote.interceptor.AuthorizationInterceptor
 import com.dannyjung.githubapi.data.remote.service.AuthService
 import com.dannyjung.githubapi.data.remote.service.SearchService
 import com.dannyjung.githubapi.data.remote.service.UserService
+import com.dannyjung.githubapi.domain.repository.AuthRepository
 import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -24,7 +27,9 @@ import javax.inject.Singleton
 object NetworkModule {
 
     @Provides
-    fun provideOkHttpClient(): OkHttpClient =
+    fun provideOkHttpClient(
+        authorizationInterceptor: AuthorizationInterceptor
+    ): OkHttpClient =
         OkHttpClient.Builder()
             .addInterceptor(
                 HttpLoggingInterceptor().apply {
@@ -37,6 +42,7 @@ object NetworkModule {
                     )
                 }
             )
+            .addInterceptor(authorizationInterceptor)
             .addInterceptor { chain ->
                 chain.proceed(
                     chain.request().newBuilder()
@@ -50,6 +56,13 @@ object NetworkModule {
                 }
             }
             .build()
+
+    @Provides
+    @Singleton
+    fun provideAuthorizationInterceptor(
+        authLocalDataSource: AuthLocalDataSource
+    ): AuthorizationInterceptor =
+        AuthorizationInterceptor(authLocalDataSource)
 
     @AuthRetrofit
     @Provides
